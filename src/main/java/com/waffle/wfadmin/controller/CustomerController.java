@@ -1,13 +1,11 @@
 package com.waffle.wfadmin.controller;
 
+import com.waffle.wfadmin.dto.CustomerDto;
 import com.waffle.wfadmin.entity.Customer;
 import com.waffle.wfadmin.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,6 +15,13 @@ import java.util.List;
 public class CustomerController {
 
     private final CustomerService customerService;
+
+    @PostMapping("")
+    public ResponseEntity<CustomerDto.Response> insertCustomer(@RequestBody CustomerDto.Request request) {
+
+        CustomerDto.Response customer = customerService.createCustomer(request);
+        return ResponseEntity.ok().body(customer);
+    }
 
     @GetMapping("")
     public ResponseEntity<List<Customer>> getCustomer() {
